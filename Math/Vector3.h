@@ -42,9 +42,6 @@ namespace cpplib
 			static Vector3 Cross(const Vector3& a, const Vector3& b);
 			static float Dot(const Vector3& a, const Vector3& b);
 
-		private:
-			static bool IsEqual(float a, float b);
-
 		public:
 			static const Vector3 zero;
 			static const Vector3 one;

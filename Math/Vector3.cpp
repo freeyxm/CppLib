@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Vector3.h"
+#include "Math.h"
 #include <cmath>
 
 namespace cpplib
@@ -100,12 +101,12 @@ namespace cpplib
 
 		bool Vector3::operator==(const Vector3 & a) const
 		{
-			return IsEqual(x, a.x) && IsEqual(y, a.y) && IsEqual(z, a.z);
+			return Math::IsEqual(x, a.x) && Math::IsEqual(y, a.y) && Math::IsEqual(z, a.z);
 		}
 
 		bool Vector3::operator!=(const Vector3 & a) const
 		{
-			return !IsEqual(x, a.x) || !IsEqual(y, a.y) || !IsEqual(z, a.z);
+			return !Math::IsEqual(x, a.x) || !Math::IsEqual(y, a.y) || !Math::IsEqual(z, a.z);
 		}
 
 		void Vector3::Zero()
@@ -157,12 +158,6 @@ namespace cpplib
 		float Vector3::Dot(const Vector3 & a, const Vector3 & b)
 		{
 			return a.x*b.x + a.y*b.y + a.z*b.z;
-		}
-
-		bool Vector3::IsEqual(float a, float b)
-		{
-			float diff = a - b;
-			return -1E-5f < diff && diff < +1E-5f;
 		}
 
 		float Vector3::Distance(const Vector3 & a, const Vector3 & b)
