@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{B47A59B3-90BD-4324-9554-DDF715D289E5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Math</RootNamespace>
+    <RootNamespace>math</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <ProjectName>math</ProjectName>
   </PropertyGroup>
