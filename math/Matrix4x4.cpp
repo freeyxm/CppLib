@@ -195,14 +195,14 @@ namespace cpplib
             return Matrix4x4({
                 (xxc1 + c),  (xyc1 - zs), (xzc1 + ys), 0,
                 (xyc1 + zs), (yyc1 + c),  (yzc1 - xs), 0,
-                (xzc1 - ys), (yzc1 + xs),  (zzc1 + c), 0,
+                (xzc1 - ys), (yzc1 + xs), (zzc1 + c),  0,
                           0,           0,           0, 1,
                 });
         }
 
         Matrix4x4 Matrix4x4::Rotate(const Vector3 & euler)
         {
-            return Matrix4x4();
+            return Matrix4x4(); // todo
         }
 
         Matrix4x4 Matrix4x4::RotateX(float angle)
