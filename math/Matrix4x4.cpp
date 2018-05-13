@@ -113,29 +113,34 @@ namespace cpplib
             return matrix;
         }
 
+        Vector3 Matrix4x4::operator*(const Vector3 & v) const
+        {
+            return this->MultiplyPoint(v);
+        }
+
         Vector3 Matrix4x4::MultiplyVector(const Vector3 & v) const
         {
-            float x = v.x * m11 + v.y *m21 + v.z*m31;
-            float y = v.x * m12 + v.y *m22 + v.z*m32;
-            float z = v.x * m13 + v.y *m23 + v.z*m33;
+            float x = m11 * v.x + m12 * v.y + m13 * v.z;
+            float y = m21 * v.x + m22 * v.y + m23 * v.z;
+            float z = m31 * v.x + m32 * v.y + m33 * v.z;
             return Vector3(x, y, z);
         }
 
         Vector3 Matrix4x4::MultiplyPoint(const Vector3 & v) const
         {
-            float x = v.x * m11 + v.y *m21 + v.z*m31 + m41;
-            float y = v.x * m12 + v.y *m22 + v.z*m32 + m42;
-            float z = v.x * m13 + v.y *m23 + v.z*m33 + m43;
+            float x = m11 * v.x + m12 * v.y + m13 * v.z + m14;
+            float y = m21 * v.x + m22 * v.y + m23 * v.z + m24;
+            float z = m31 * v.x + m32 * v.y + m33 * v.z + m34;
             return Vector3(x, y, z);
         }
 
         Matrix4x4 Matrix4x4::Translate(const Vector3 & v)
         {
             return Matrix4x4({
-                  1,   0,   0,   0,
-                  0,   1,   0,   0,
-                  0,   0,   1,   0,
-                v.x, v.y, v.z,   1,
+                  1,   0,   0,   v.x,
+                  0,   1,   0,   v.y,
+                  0,   0,   1,   v.z,
+                  0,   0,   0,     1,
                 });
         }
 
@@ -188,9 +193,9 @@ namespace cpplib
             float   zs = n.z * s;
 
             return Matrix4x4({
-                (xxc1 + c),  (xyc1 + zs), (xzc1 - ys), 0,
-                (xyc1 - zs),  (yyc1 + c), (yzc1 + xs), 0,
-                (xzc1 + ys), (yzc1 - xs),  (zzc1 + c), 0,
+                (xxc1 + c),  (xyc1 - zs), (xzc1 + ys), 0,
+                (xyc1 + zs), (yyc1 + c),  (yzc1 - xs), 0,
+                (xzc1 - ys), (yzc1 + xs),  (zzc1 + c), 0,
                           0,           0,           0, 1,
                 });
         }
@@ -207,8 +212,8 @@ namespace cpplib
             float s = sin(radius);
             return Matrix4x4({
                  1, 0, 0, 0,
-                 0, c, s, 0,
-                 0,-s, c, 0,
+                 0, c,-s, 0,
+                 0, s, c, 0,
                  0, 0, 0, 1,
                 });
         }
@@ -219,9 +224,9 @@ namespace cpplib
             float c = cos(radius);
             float s = sin(radius);
             return Matrix4x4({
-                 c, 0,-s, 0,
+                 c, 0, s, 0,
                  0, 1, 0, 0,
-                 s, 0, c, 0,
+                -s, 0, c, 0,
                  0, 0, 0, 1,
                 });
         }
@@ -232,8 +237,8 @@ namespace cpplib
             float c = cos(radius);
             float s = sin(radius);
             return Matrix4x4({
-                 c, s, 0, 0,
-                -s, c, 0, 0,
+                 c,-s, 0, 0,
+                 s, c, 0, 0,
                  0, 0, 1, 0,
                  0, 0, 0, 1,
                 });
@@ -319,16 +324,6 @@ namespace cpplib
             {
                 m[r1][i] += m[r2][i] * k;
             }
-        }
-
-        Vector3 operator*(const Vector3 & v, const Matrix4x4 & t)
-        {
-            return t.MultiplyPoint(v);
-        }
-
-        Vector3 operator*(const Matrix4x4 & t, const Vector3 & v)
-        {
-            return t.MultiplyPoint(v);
         }
     } // namespace math
 } // namespace cpplib

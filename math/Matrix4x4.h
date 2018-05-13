@@ -41,6 +41,7 @@ namespace cpplib
             Matrix4x4& operator*=(const Matrix4x4& t);
 
             Matrix4x4 operator*(const Matrix4x4& t) const;
+            Vector3 operator*(const Vector3& v) const;
 
             Vector3 MultiplyVector(const Vector3& v) const;
             Vector3 MultiplyPoint(const Vector3& v) const;
@@ -72,9 +73,5 @@ namespace cpplib
             const static Matrix4x4 identity;
             const static Matrix4x4 zero;
         };
-
-        Vector3 operator*(const Vector3& v, const Matrix4x4& t);
-        Vector3 operator*(const Matrix4x4& t, const Vector3& v);
-
     } // namespace math
 } // namespace cpplib
