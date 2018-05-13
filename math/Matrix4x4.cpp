@@ -5,6 +5,8 @@
 #include <cmath>
 #include <assert.h>
 
+#define swap(a, b, tmp) { tmp = a; a = b; b = tmp; }
+
 namespace cpplib
 {
 	namespace math
@@ -33,10 +35,50 @@ namespace cpplib
 			memcpy_s(&m, sizeof(m), &a, sizeof(a));
 		}
 
-		float & Matrix4x4::operator[](int index)
+		Matrix4x4::Matrix4x4(
+			float m11, float m12, float m13, float m14,
+			float m21, float m22, float m23, float m24,
+			float m31, float m32, float m33, float m34,
+			float m41, float m42, float m43, float m44)
+			: m11(m11), m12(m12), m13(m13), m14(m14)
+			, m21(m21), m22(m22), m23(m23), m24(m24)
+			, m31(m31), m32(m32), m33(m33), m34(m34)
+			, m41(m41), m42(m42), m43(m43), m44(m44)
 		{
-			assert(0 <= index && index < 16);
-			return m[(index >> 2)][(index & 0x03)];
+		}
+
+		float * Matrix4x4::operator[](int row)
+		{
+			assert(0 <= row && row <= 4);
+			return m[row];
+		}
+
+		const float * Matrix4x4::operator[](int row) const
+		{
+			assert(0 <= row && row <= 4);
+			return m[row];
+		}
+
+		bool Matrix4x4::operator==(const Matrix4x4 & t) const
+		{
+			for (int i = 0; i < 4; ++i) {
+				for (int j = 0; j < 4; ++j) {
+					if (!Math::IsEqual(m[i][j], t.m[i][j]))
+						return false;
+				}
+			}
+			return true;
+		}
+
+		bool Matrix4x4::operator!=(const Matrix4x4 & t) const
+		{
+			for (int i = 0; i < 4; ++i) {
+				for (int j = 0; j < 4; ++j) {
+					if (!Math::IsEqual(m[i][j], t.m[i][j]))
+						return true;
+				}
+			}
+			return false;
 		}
 
 		Matrix4x4 & Matrix4x4::operator=(const Matrix4x4 & t)
@@ -60,7 +102,7 @@ namespace cpplib
 			return *this;
 		}
 
-		Matrix4x4 Matrix4x4::operator*(const Matrix4x4 & t)
+		Matrix4x4 Matrix4x4::operator*(const Matrix4x4 & t) const
 		{
 			Matrix4x4 matrix;
 			for (int i = 0; i < 4; ++i) {
@@ -71,29 +113,40 @@ namespace cpplib
 			return matrix;
 		}
 
-		Vector3 Matrix4x4::MultiplyVector(const Vector3 & v)
+		Vector3 Matrix4x4::MultiplyVector(const Vector3 & v) const
 		{
-			float x = v.x * m[0][0] + v.y *m[1][0] + v.z*m[2][0];
-			float y = v.x * m[0][1] + v.y *m[1][1] + v.z*m[2][1];
-			float z = v.x * m[0][2] + v.y *m[1][2] + v.z*m[2][2];
+			float x = v.x * m11 + v.y *m21 + v.z*m31;
+			float y = v.x * m12 + v.y *m22 + v.z*m32;
+			float z = v.x * m13 + v.y *m23 + v.z*m33;
 			return Vector3(x, y, z);
 		}
 
-		Vector3 Matrix4x4::MultiplyPoint(const Vector3 & v)
+		Vector3 Matrix4x4::MultiplyPoint(const Vector3 & v) const
 		{
-			float x = v.x * m[0][0] + v.y *m[1][0] + v.z*m[2][0] + m[3][0];
-			float y = v.x * m[0][1] + v.y *m[1][1] + v.z*m[2][1] + m[3][1];
-			float z = v.x * m[0][2] + v.y *m[1][2] + v.z*m[2][2] + m[3][2];
+			float x = v.x * m11 + v.y *m21 + v.z*m31 + m41;
+			float y = v.x * m12 + v.y *m22 + v.z*m32 + m42;
+			float z = v.x * m13 + v.y *m23 + v.z*m33 + m43;
 			return Vector3(x, y, z);
 		}
 
-		Matrix4x4 Matrix4x4::Scale(const Vector3& scale)
+		Matrix4x4 Matrix4x4::Translate(const Vector3 & v)
 		{
-			Matrix4x4 matrix = Matrix4x4::identity;
-			matrix.m[0][0] = scale.x;
-			matrix.m[1][1] = scale.y;
-			matrix.m[2][2] = scale.z;
-			return matrix;
+			return Matrix4x4({
+				  1,   0,   0,   0,
+				  0,   1,   0,   0,
+				  0,   0,   1,   0,
+				v.x, v.y, v.z,   1,
+				});
+		}
+
+		Matrix4x4 Matrix4x4::Scale(const Vector3& s)
+		{
+			return Matrix4x4({
+				s.x,   0,   0,   0,
+				  0, s.y,   0,   0,
+				  0,   0, s.z,   0,
+				  0,   0,   0,   1,
+				});
 		}
 
 		Matrix4x4 Matrix4x4::Scale(const Vector3 & n, float k)
@@ -184,6 +237,98 @@ namespace cpplib
 				 0, 0, 1, 0,
 				 0, 0, 0, 1,
 				});
+		}
+
+		float Matrix4x4::Determinant() const
+		{
+			return
+				m11 * (m22 * (m33 * m33 - m34 * m43) - m23 * (m34 * m42 + m32 * m44) + m24 * (m32 * m43 - m33 * m42)) -
+				m21 * (m12 * (m33 * m44 - m34 * m43) - m23 * (m34 * m41 + m31 * m44) + m24 * (m31 * m43 - m33 * m41)) +
+				m31 * (m21 * (m32 * m44 - m34 * m42) - m22 * (m34 * m41 + m31 * m44) + m42 * (m13 * m24 - m14 * m23)) -
+				m41 * (m12 * (m23 * m34 - m24 * m33) - m22 * (m13 * m34 + m14 * m33) + m32 * (m13 * m24 - m14 * m23));
+		}
+
+		Matrix4x4 Matrix4x4::Inverse() const
+		{
+			Matrix4x4 a(*this);
+			Matrix4x4 b(Matrix4x4::identity);
+			// bottom
+			for (int i = 0; i < N; ++i) {
+				if (Math::IsEqual(m[i][i], 0)) {
+					bool find = false;
+					for (int j = i + 1; j < N; ++j) {
+						if (!Math::IsEqual(m[j][i], 0)) {
+							a.SwapRow(i, j);
+							b.SwapRow(i, j);
+							find = true;
+							break;
+						}
+					}
+					if (!find) {
+						return Matrix4x4::zero;
+					}
+				}
+				float factor = 1.0f / a.m[i][i];
+				for (int c = i; c < N; ++c)
+				{
+					a.m[i][c] *= factor;
+					b.m[i][c] *= factor;
+				}
+				for (int j = i + 1; j < N; ++j)
+				{
+					float k = -a.m[j][i];
+					a.AddRow(j, i, k);
+					b.AddRow(j, i, k);
+				}
+			}
+			// top
+			for (int i = N - 1; i > 0; --i)
+			{
+				for (int j = i - 1; j >= 0; --j)
+				{
+					float k = -a.m[j][i];
+					a.AddRow(j, i, k);
+					b.AddRow(j, i, k);
+				}
+			}
+			return b;
+		}
+
+		Matrix4x4 Matrix4x4::Transpose() const
+		{
+			return Matrix4x4(
+				m11, m21, m31, m41,
+				m12, m22, m32, m42,
+				m13, m23, m33, m43,
+				m14, m24, m34, m44
+			);
+		}
+
+		void Matrix4x4::SwapRow(int r1, int r2)
+		{
+			float tmp;
+			for (int i = 0; i < N; ++i)
+			{
+				swap(m[r1][i], m[r2][i], tmp);
+			}
+		}
+
+		void Matrix4x4::AddRow(int r1, int r2, float k)
+		{
+			for (int i = 0; i < N; ++i)
+			{
+				m[r1][i] += m[r2][i] * k;
+			}
+		}
+
+		Vector3 operator*(const Vector3 & v, const Matrix4x4 & t)
+		{
+			return t.MultiplyPoint(v);
+		}
+
+		Vector3 operator*(const Matrix4x4 & t, const Vector3 & v)
+		{
+			return t.MultiplyPoint(v);
 		}
 	} // namespace math
 } // namespace cpplib
