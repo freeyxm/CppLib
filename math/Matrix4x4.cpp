@@ -174,11 +174,11 @@ namespace cpplib
                 });
         }
 
-        Matrix4x4 Matrix4x4::Rotate(const Vector3 & n, float angle)
+        Matrix4x4 Matrix4x4::Rotate(const Vector3 & n, float degree)
         {
-            float radius = angle * Math::Deg2Rad;
-            float c = cos(radius);
-            float s = sin(radius);
+            float radian = degree * Math::Deg2Rad;
+            float c = cos(radian);
+            float s = sin(radian);
             float c1 = 1 - c;
             float  xc1 = n.x * c1;
             float xxc1 = n.x * xc1;
@@ -205,11 +205,11 @@ namespace cpplib
             return Matrix4x4(); // todo
         }
 
-        Matrix4x4 Matrix4x4::RotateX(float angle)
+        Matrix4x4 Matrix4x4::RotateX(float degree)
         {
-            float radius = angle * Math::Deg2Rad;
-            float c = cos(radius);
-            float s = sin(radius);
+            float radian = degree * Math::Deg2Rad;
+            float c = cos(radian);
+            float s = sin(radian);
             return Matrix4x4({
                  1, 0, 0, 0,
                  0, c,-s, 0,
@@ -218,11 +218,11 @@ namespace cpplib
                 });
         }
 
-        Matrix4x4 Matrix4x4::RotateY(float angle)
+        Matrix4x4 Matrix4x4::RotateY(float degree)
         {
-            float radius = angle * Math::Deg2Rad;
-            float c = cos(radius);
-            float s = sin(radius);
+            float radian = degree * Math::Deg2Rad;
+            float c = cos(radian);
+            float s = sin(radian);
             return Matrix4x4({
                  c, 0, s, 0,
                  0, 1, 0, 0,
@@ -231,11 +231,11 @@ namespace cpplib
                 });
         }
 
-        Matrix4x4 Matrix4x4::RotateZ(float angle)
+        Matrix4x4 Matrix4x4::RotateZ(float degree)
         {
-            float radius = angle * Math::Deg2Rad;
-            float c = cos(radius);
-            float s = sin(radius);
+            float radian = degree * Math::Deg2Rad;
+            float c = cos(radian);
+            float s = sin(radian);
             return Matrix4x4({
                  c,-s, 0, 0,
                  s, c, 0, 0,

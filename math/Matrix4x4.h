@@ -51,11 +51,11 @@ namespace cpplib
             static Matrix4x4 Scale(const Vector3& scale);
             static Matrix4x4 Scale(const Vector3& axis, float k);
 
-            static Matrix4x4 Rotate(const Vector3& axis, float angle);
+            static Matrix4x4 Rotate(const Vector3& axis, float degree);
             static Matrix4x4 Rotate(const Vector3& euler);
-            static Matrix4x4 RotateX(float angle);
-            static Matrix4x4 RotateY(float angle);
-            static Matrix4x4 RotateZ(float angle);
+            static Matrix4x4 RotateX(float degree);
+            static Matrix4x4 RotateY(float degree);
+            static Matrix4x4 RotateZ(float degree);
 
             static Matrix4x4 TRS(const Vector3& t, const Vector3& r, const Vector3& s);
 
