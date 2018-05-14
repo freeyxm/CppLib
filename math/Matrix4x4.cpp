@@ -156,15 +156,15 @@ namespace cpplib
 
         Matrix4x4 Matrix4x4::Scale(const Vector3 & n, float k)
         {
-            float   k1 = k - 1;
-            float  xk1 = n.x *  k1;
-            float xxk1 = n.x * xk1;
-            float xyk1 = n.y * xk1;
-            float xzk1 = n.z * xk1;
-            float  yk1 = n.y *  k1;
-            float yyk1 = n.y * yk1;
-            float yzk1 = n.z * yk1;
-            float zzk1 = n.z * n.z * k1;
+            const float   k1 = k - 1;
+            const float  xk1 = n.x *  k1;
+            const float xxk1 = n.x * xk1;
+            const float xyk1 = n.y * xk1;
+            const float xzk1 = n.z * xk1;
+            const float  yk1 = n.y *  k1;
+            const float yyk1 = n.y * yk1;
+            const float yzk1 = n.z * yk1;
+            const float zzk1 = n.z * n.z * k1;
 
             return Matrix4x4({
                 1 + xxk1,     xyk1,     xzk1, 0,
@@ -176,40 +176,65 @@ namespace cpplib
 
         Matrix4x4 Matrix4x4::Rotate(const Vector3 & n, float degree)
         {
-            float radian = degree * Math::Deg2Rad;
-            float c = cos(radian);
-            float s = sin(radian);
-            float c1 = 1 - c;
-            float  xc1 = n.x * c1;
-            float xxc1 = n.x * xc1;
-            float xyc1 = n.y * xc1;
-            float xzc1 = n.z * xc1;
-            float  yc1 = n.y * c1;
-            float yyc1 = n.y * yc1;
-            float yzc1 = n.z * yc1;
-            float zzc1 = n.z * n.z * c1;
-            float   xs = n.x * s;
-            float   ys = n.y * s;
-            float   zs = n.z * s;
+            const float radian = degree * Math::Deg2Rad;
+            const float c = cos(radian);
+            const float s = sin(radian);
+            const float   c1 = 1 - c;
+            const float  xc1 = n.x * c1;
+            const float xxc1 = n.x * xc1;
+            const float xyc1 = n.y * xc1;
+            const float xzc1 = n.z * xc1;
+            const float  yc1 = n.y * c1;
+            const float yyc1 = n.y * yc1;
+            const float yzc1 = n.z * yc1;
+            const float zzc1 = n.z * n.z * c1;
+            const float   xs = n.x * s;
+            const float   ys = n.y * s;
+            const float   zs = n.z * s;
 
             return Matrix4x4({
                 (xxc1 + c),  (xyc1 - zs), (xzc1 + ys), 0,
                 (xyc1 + zs), (yyc1 + c),  (yzc1 - xs), 0,
                 (xzc1 - ys), (yzc1 + xs), (zzc1 + c),  0,
-                          0,           0,           0, 1,
+                          0,           0,          0,  1,
                 });
         }
 
         Matrix4x4 Matrix4x4::Rotate(const Vector3 & euler)
         {
-            return Matrix4x4(); // todo
+            const float h = euler.y * Math::Deg2Rad;
+            const float p = euler.x * Math::Deg2Rad;
+            const float b = euler.z * Math::Deg2Rad;
+            const float ch = cos(h);
+            const float cp = cos(p);
+            const float ch_cp = ch * cp;
+            const float sp = sin(p);
+            const float ch_sp = ch * sp;
+            const float cb = cos(b);
+            const float ch_cb = ch * cb;
+            const float sb = sin(b);
+            const float ch_sb = ch * sb;
+            const float sh = sin(h);
+            const float sh_sb = sh * sb;
+            const float sh_cb = sh * cb;
+            const float sh_sp = sh * sp;
+            const float sh_cp = sh * cp;
+            const float sb_cp = sb * cp;
+            const float cb_cp = cb * cp;
+
+            return Matrix4x4(
+                ch_cb + sh_sp * sb, -ch_sb + sh_sp * cb, sh_cp, 0,
+                sb_cp, cb_cp, -sp, 0,
+                -sh_cb + ch_sp * sb, sh_sb + ch_cb * sp, ch_cp, 0,
+                0, 0, 0, 1
+            );
         }
 
         Matrix4x4 Matrix4x4::RotateX(float degree)
         {
-            float radian = degree * Math::Deg2Rad;
-            float c = cos(radian);
-            float s = sin(radian);
+            const float radian = degree * Math::Deg2Rad;
+            const float c = cos(radian);
+            const float s = sin(radian);
             return Matrix4x4({
                  1, 0, 0, 0,
                  0, c,-s, 0,
@@ -220,9 +245,9 @@ namespace cpplib
 
         Matrix4x4 Matrix4x4::RotateY(float degree)
         {
-            float radian = degree * Math::Deg2Rad;
-            float c = cos(radian);
-            float s = sin(radian);
+            const float radian = degree * Math::Deg2Rad;
+            const float c = cos(radian);
+            const float s = sin(radian);
             return Matrix4x4({
                  c, 0, s, 0,
                  0, 1, 0, 0,
@@ -233,9 +258,9 @@ namespace cpplib
 
         Matrix4x4 Matrix4x4::RotateZ(float degree)
         {
-            float radian = degree * Math::Deg2Rad;
-            float c = cos(radian);
-            float s = sin(radian);
+            const float radian = degree * Math::Deg2Rad;
+            const float c = cos(radian);
+            const float s = sin(radian);
             return Matrix4x4({
                  c,-s, 0, 0,
                  s, c, 0, 0,
