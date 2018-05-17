@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include <gtest\gtest.h>
 #include <Math\Vector3.h>
+#include <Math\Quaternion.h>
 #include <Math\Matrix4x4.h>
 #include <Math\Math.h>
 #include <iostream>
@@ -72,32 +73,42 @@ TEST(Matrix4x4Test, Rotate)
     {
         Matrix4x4 matrix = Matrix4x4::RotateX(45);
         Vector3 res = matrix.MultiplyVector(vec);
-        EXPECT_TRUE(res == Vector3(1, -0.707107, 3.535534));
+        EXPECT_TRUE(res == Vector3(1, -0.707107f, 3.535534f));
     }
     {
         Matrix4x4 matrix = Matrix4x4::RotateY(45);
         Vector3 res = matrix.MultiplyVector(vec);
-        EXPECT_TRUE(res == Vector3(2.828427, 2, 1.414213));
+        EXPECT_TRUE(res == Vector3(2.828427f, 2, 1.414213f));
     }
     {
         Matrix4x4 matrix = Matrix4x4::RotateZ(45);
         Vector3 res = matrix.MultiplyVector(vec);
-        EXPECT_TRUE(res == Vector3(-0.7071069, 2.12132, 3));
+        EXPECT_TRUE(res == Vector3(-0.7071069f, 2.12132f, 3));
     }
     {
         Matrix4x4 matrix = Matrix4x4::Rotate(Vector3(10, 20, 30));
         Vector3 res = matrix.MultiplyVector(vec);
-        EXPECT_TRUE(res == Vector3(1.017141, 1.677197, 3.186289));
+        EXPECT_TRUE(res == Vector3(1.017141f, 1.677197f, 3.186289f));
     }
     {
         Matrix4x4 matrix = Matrix4x4::Rotate(Vector3(1, 0, 0), 45);
         Vector3 res = matrix.MultiplyVector(vec);
-        EXPECT_TRUE(res == Vector3(1, -0.707107, 3.535534));
+        EXPECT_TRUE(res == Vector3(1, -0.707107f, 3.535534f));
     }
     {
-        Matrix4x4 matrix = Matrix4x4::Rotate(Vector3(3, 2, 1), 45);
+        Matrix4x4 matrix = Matrix4x4::Rotate(Vector3(0, 1, 0), 45);
         Vector3 res = matrix.MultiplyVector(vec);
-        EXPECT_TRUE(res == Vector3(2.090664, 0.3207744, 3.086459));
+        EXPECT_TRUE(res == Vector3(2.828427f, 2, 1.414213f));
+    }
+    {
+        Matrix4x4 matrix = Matrix4x4::Rotate(Vector3(0, 0, 1), 45);
+        Vector3 res = matrix.MultiplyVector(vec);
+        EXPECT_TRUE(res == Vector3(-0.7071069f, 2.12132f, 3));
+    }
+    {
+        Matrix4x4 matrix = Matrix4x4::Rotate(Vector3(1, 1, 1), 90);
+        Vector3 res = matrix.MultiplyVector(Vector3(1, 0, 0));
+        EXPECT_TRUE(res == Vector3(0.3333333f, 0.9106836f, -0.2440169f));
     }
 }
 

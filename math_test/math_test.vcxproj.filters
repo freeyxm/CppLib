@@ -35,5 +35,8 @@
     <ClCompile Include="Matrix4x4Test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="QuaternionTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
