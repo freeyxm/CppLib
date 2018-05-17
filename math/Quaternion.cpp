@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Quaternion.h"
+#include "Matrix4x4.h"
 #include "Math.h"
 #include <cmath>
 
@@ -24,12 +25,20 @@ namespace cpplib
         {
         }
 
+        void Quaternion::Set(float x, float y, float z, float w)
+        {
+            this->x = x;
+            this->y = y;
+            this->z = z;
+            this->w = w;
+        }
+
         Quaternion & Quaternion::operator=(const Quaternion & a)
         {
-            x = a.x;
-            y = a.y;
-            z = a.z;
-            w = a.w;
+            this->x = a.x;
+            this->y = a.y;
+            this->z = a.z;
+            this->w = a.w;
             return *this;
         }
 
@@ -40,9 +49,9 @@ namespace cpplib
             float _z = w * a.z + z * a.w + y * a.x - x * a.y;
             float _w = w * a.w - x * a.x - y * a.y - z * a.z;
             this->x = _x;
-            this->y = y;
-            this->z = z;
-            this->w = w;
+            this->y = _y;
+            this->z = _z;
+            this->w = _w;
             return *this;
         }
 
@@ -53,6 +62,11 @@ namespace cpplib
             float _z = w * a.z + z * a.w + y * a.x - x * a.y;
             float _w = w * a.w - x * a.x - y * a.y - z * a.z;
             return Quaternion(_x, _y, _z, _w);
+        }
+
+        Vector3 Quaternion::operator*(const Vector3 & a) const
+        {
+            return Matrix4x4::Rotate(*this) * a;
         }
 
         bool Quaternion::operator==(const Quaternion & a) const
@@ -73,19 +87,19 @@ namespace cpplib
         Vector3 Quaternion::EulerAngles() const
         {
             float h, p, b;
-            float sp = -2 * (y * z + w * x);
+            float sp = -2 * (y * z - w * x);
             // ¼ì²éÍòÏòËø
             if (fabs(sp) > 0.9999f)
             {
                 p = Math::PI * 0.5f * sp;
-                h = atan2(-x * z - w * y, 0.5f - y * y - z * z);
+                h = atan2(-x * z + w * y, 0.5f - y * y - z * z);
                 b = 0.0f;
             }
             else
             {
                 p = asin(sp);
-                h = atan2(x * z - w * y, 0.5f - x * x - y * y);
-                b = atan2(x * y - w * z, 0.5f - x * x - z * z);
+                h = atan2(x * z + w * y, 0.5f - x * x - y * y);
+                b = atan2(x * y + w * z, 0.5f - x * x - z * z);
             }
             p *= Math::Rad2Deg;
             h *= Math::Rad2Deg;
@@ -147,9 +161,9 @@ namespace cpplib
             {
                 float sinA = sqrt(1 - cosA * cosA);
                 float omega = atan2(sinA, cosA);
-                float oneOverOmega = 1.0f / omega;
-                k0 = sin((1 - t) * omega) * oneOverOmega;
-                k1 = sin(t * omega) * oneOverOmega;
+                float oneOverSinA = 1.0f / sinA;
+                k0 = sin((1 - t) * omega) * oneOverSinA;
+                k1 = sin(t * omega) * oneOverSinA;
             }
             if (opposite)
             {

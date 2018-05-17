@@ -174,6 +174,25 @@ namespace cpplib
                 });
         }
 
+        Matrix4x4 Matrix4x4::Rotate(const Quaternion & q)
+        {
+            float xx = q.x * q.x * 2;
+            float xy = q.x * q.y * 2;
+            float xz = q.x * q.z * 2;
+            float yy = q.y * q.y * 2;
+            float yz = q.y * q.z * 2;
+            float zz = q.z * q.z * 2;
+            float wx = q.w * q.x * 2;
+            float wy = q.w * q.y * 2;
+            float wz = q.w * q.z * 2;
+            return Matrix4x4(
+                1 - yy - zz, xy - wz, xz + wy, 0,
+                xy + wz, 1 - xx - zz, yz - wx, 0,
+                xz - wy, yz + wx, 1 - xx - yy, 0,
+                0, 0, 0, 1
+            );
+        }
+
         Matrix4x4 Matrix4x4::Rotate(const Vector3 & n, float degree)
         {
             const float radian = degree * Math::Deg2Rad;
@@ -332,6 +351,45 @@ namespace cpplib
                 m13, m23, m33, m43,
                 m14, m24, m34, m44
             );
+        }
+
+        Quaternion Matrix4x4::Rotation() const
+        {
+            float w2 = m11 + m22 + m33;
+            float x2 = m11 - m22 - m33;
+            float y2 = m22 - m11 - m33;
+            float z2 = m33 - m11 - m22;
+
+            float max = w2;
+            int index = 0;
+            if (max < x2) {
+                max = x2;
+                index = 1;
+            }
+            if (max < y2) {
+                max = y2;
+                index = 2;
+            }
+            if (max < z2) {
+                max = z2;
+                index = 3;
+            }
+
+            float max_value = sqrt(max + 1) * 0.5f;
+            float mult = 0.25f / max_value;
+            switch (index)
+            {
+            case 0:
+                return Quaternion((m32 - m23)*mult, (m13 - m31)*mult, (m21 - m12)*mult, max_value);
+            case 1:
+                return Quaternion(max_value, (m12 + m21)*mult, (m31 + m13)*mult, (m32 - m23)*mult);
+            case 2:
+                return Quaternion((m12 + m21)*mult, max_value, (m23 + m32)*mult, (m13 - m31)*mult);
+            case 3:
+                return Quaternion((m31 + m13)*mult, (m23 + m32)*mult, max_value, (m21 - m12)*mult);
+            default:
+                return Quaternion();
+            }
         }
 
         void Matrix4x4::SwapRow(int r1, int r2)

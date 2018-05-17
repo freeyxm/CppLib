@@ -18,10 +18,14 @@ namespace cpplib
             Quaternion(float x, float y, float z, float w);
             Quaternion(const Quaternion& a);
 
+            void Set(float x, float y, float z, float w);
+
             Quaternion& operator=(const Quaternion& a);
             Quaternion& operator*=(const Quaternion& a);
 
             Quaternion operator*(const Quaternion& a) const;
+
+            Vector3 operator*(const Vector3& a) const;
 
             bool operator==(const Quaternion& a) const;
             bool operator!=(const Quaternion& a) const;

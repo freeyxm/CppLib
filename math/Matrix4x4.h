@@ -1,5 +1,6 @@
 #pragma once
 #include "Vector3.h"
+#include "Quaternion.h"
 
 namespace cpplib
 {
@@ -51,6 +52,7 @@ namespace cpplib
             static Matrix4x4 Scale(const Vector3& scale);
             static Matrix4x4 Scale(const Vector3& axis, float k);
 
+            static Matrix4x4 Rotate(const Quaternion& q);
             static Matrix4x4 Rotate(const Vector3& axis, float degree);
             static Matrix4x4 Rotate(const Vector3& euler);
             static Matrix4x4 RotateX(float degree);
@@ -63,6 +65,7 @@ namespace cpplib
             float Determinant() const;
             Matrix4x4 Inverse() const;
             Matrix4x4 Transpose() const;
+            Quaternion Rotation() const;
 
         private:
             const int N = 4;
@@ -70,8 +73,8 @@ namespace cpplib
             void AddRow(int r1, int r2, float k);
 
         public:
-            const static Matrix4x4 identity;
-            const static Matrix4x4 zero;
+            static const Matrix4x4 identity;
+            static const Matrix4x4 zero;
         };
     } // namespace math
 } // namespace cpplib
