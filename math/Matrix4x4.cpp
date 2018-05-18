@@ -290,11 +290,29 @@ namespace cpplib
 
         float Matrix4x4::Determinant() const
         {
-            return
-                m11 * (m22 * (m33 * m33 - m34 * m43) - m23 * (m34 * m42 + m32 * m44) + m24 * (m32 * m43 - m33 * m42)) -
-                m21 * (m12 * (m33 * m44 - m34 * m43) - m23 * (m34 * m41 + m31 * m44) + m24 * (m31 * m43 - m33 * m41)) +
-                m31 * (m21 * (m32 * m44 - m34 * m42) - m22 * (m34 * m41 + m31 * m44) + m42 * (m13 * m24 - m14 * m23)) -
-                m41 * (m12 * (m23 * m34 - m24 * m33) - m22 * (m13 * m34 + m14 * m33) + m32 * (m13 * m24 - m14 * m23));
+            float m31_m42 = m31 * m42;
+            float m31_m43 = m31 * m43;
+            float m31_m44 = m31 * m44;
+
+            float m32_m44 = m32 * m44;
+            float m32_m43 = m32 * m43;
+            float m32_m41 = m32 * m41;
+
+            float m33_m41 = m33 * m41;
+            float m33_m44 = m33 * m44;
+            float m33_m42 = m33 * m42;
+
+            float m34_m42 = m34 * m42;
+            float m34_m41 = m34 * m41;
+            float m34_m43 = m34 * m43;
+
+            float m1 = m11 * (m22 * (m33_m44 - m34_m43) + m23 * (m34_m42 - m32_m44) + m24 * (m32_m43 - m33_m42));
+            float m2 = m12 * (m21 * (m33_m44 - m34_m43) + m23 * (m34_m41 - m31_m44) + m24 * (m31_m43 - m33_m41));
+            float m3 = m13 * (m21 * (m32_m44 - m34_m42) + m22 * (m34_m41 - m31_m44) + m24 * (m31_m42 - m32_m41));
+            float m4 = m14 * (m21 * (m32_m43 - m33_m42) + m22 * (m33_m41 - m31_m43) + m23 * (m31_m42 - m32_m41));
+
+            float mm = m1 - m2 + m3 - m4;
+            return mm;
         }
 
         Matrix4x4 Matrix4x4::Inverse() const

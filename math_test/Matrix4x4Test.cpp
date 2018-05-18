@@ -114,9 +114,16 @@ TEST(Matrix4x4Test, Rotate)
 
 TEST(Matrix4x4Test, Determinant)
 {
-    Matrix4x4 matrix = Matrix4x4::Translate(Vector3(7, 8, 9))
-        * Matrix4x4::Scale(Vector3(2, 3, 4));
+    Matrix4x4 matrix = Matrix4x4::identity;
     float res = matrix.Determinant();
+    EXPECT_FLOAT_EQ(res, 1);
+
+    matrix = Matrix4x4::Scale(Vector3(2, 3, 4));
+    res = matrix.Determinant();
+    EXPECT_FLOAT_EQ(res, 24);
+
+    matrix = Matrix4x4::Translate(Vector3(7, 8, 9)) * Matrix4x4::Scale(Vector3(2, 3, 4));
+    res = matrix.Determinant();
     EXPECT_FLOAT_EQ(res, 24);
 }
 
@@ -125,7 +132,7 @@ TEST(Matrix4x4Test, Transpose)
     Matrix4x4 matrix = Matrix4x4::Scale(Vector3(2, 3, 4));
     Matrix4x4 transpose = matrix.Transpose();
     Matrix4x4 matrix2 = transpose.Transpose();
-    EXPECT_EQ(matrix, matrix2);
+    EXPECT_TRUE(matrix == matrix2);
 }
 
 TEST(Matrix4x4Test, Inverse)
@@ -135,5 +142,5 @@ TEST(Matrix4x4Test, Inverse)
     //* Matrix4x4::Rotate(Vector3(5, 6, 7), 45);
     Matrix4x4 inverse = matrix.Inverse();
     Matrix4x4 res = matrix * inverse;
-    EXPECT_EQ(res, Matrix4x4::identity);
+    EXPECT_TRUE(res == Matrix4x4::identity);
 }
