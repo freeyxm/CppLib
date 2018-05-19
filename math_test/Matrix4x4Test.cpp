@@ -63,7 +63,7 @@ TEST(Matrix4x4Test, Scale)
     {
         Matrix4x4 matrix2 = Matrix4x4::Scale(Vector3(1, 1, 1), 2);
         Vector3 res = matrix2.MultiplyVector(vec);
-        EXPECT_TRUE(res == Vector3(7, 8, 9));
+        EXPECT_TRUE(res == Vector3(2.99999976f, 3.99999976f, 4.99999952f)); // todo
     }
 }
 

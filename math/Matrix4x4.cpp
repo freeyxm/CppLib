@@ -154,8 +154,9 @@ namespace cpplib
                 });
         }
 
-        Matrix4x4 Matrix4x4::Scale(const Vector3 & n, float k)
+        Matrix4x4 Matrix4x4::Scale(const Vector3 & axis, float k)
         {
+            const Vector3 n = axis.normalized();
             const float   k1 = k - 1;
             const float  xk1 = n.x *  k1;
             const float xxk1 = n.x * xk1;
