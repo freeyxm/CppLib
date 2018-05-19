@@ -289,6 +289,14 @@ namespace cpplib
                 });
         }
 
+        Matrix4x4 Matrix4x4::TRS(const Vector3 & t, const Vector3 & r, const Vector3 & s)
+        {
+            Matrix4x4 matrix = Matrix4x4::Translate(t);
+            matrix *= Matrix4x4::Rotate(r);
+            matrix *= Matrix4x4::Scale(s);
+            return matrix;
+        }
+
         float Matrix4x4::Determinant() const
         {
             float m31_m42 = m31 * m42;
