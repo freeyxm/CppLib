@@ -138,9 +138,17 @@ TEST(Matrix4x4Test, Transpose)
 TEST(Matrix4x4Test, Inverse)
 {
     Matrix4x4 matrix = Matrix4x4::Translate(Vector3(7, 8, 9))
-        * Matrix4x4::Scale(Vector3(2, 3, 4));
-    //* Matrix4x4::Rotate(Vector3(5, 6, 7), 45);
+        * Matrix4x4::Scale(Vector3(2, 3, 4))
+        * Matrix4x4::Rotate(Vector3(5, 6, 7), 45);
     Matrix4x4 inverse = matrix.Inverse();
     Matrix4x4 res = matrix * inverse;
     EXPECT_TRUE(res == Matrix4x4::identity);
+}
+
+TEST(Matrix4x4Test, TRS)
+{
+    Matrix4x4 matrix = Matrix4x4::TRS(Vector3(5, 6, 7), Vector3(20, 30, 40), Vector3(1, 2, 3));
+    Vector3 vec(6, 7, 8);
+    Vector3 res = matrix.MultiplyVector(vec);
+    EXPECT_TRUE(res == Vector3(9.956966f, 5.493502f, 26.05149f));
 }

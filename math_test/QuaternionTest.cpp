@@ -12,7 +12,7 @@ using namespace cpplib::math;
 TEST(QuaternionTest, Equal)
 {
     EXPECT_TRUE(Quaternion(1, 2, 3, 1) == Quaternion(1, 2, 3, 1));
-    EXPECT_FALSE(Quaternion(1, 2, 3, 1) == Quaternion(1, 2, 3.1, 1));
+    EXPECT_FALSE(Quaternion(1, 2, 3, 1) == Quaternion(1, 2, 3.1f, 1));
 }
 
 TEST(QuaternionTest, Euler)
