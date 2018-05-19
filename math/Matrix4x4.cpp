@@ -49,20 +49,20 @@ namespace cpplib
 
         float * Matrix4x4::operator[](int row)
         {
-            assert(0 <= row && row <= 4);
+            assert(0 <= row && row <= N);
             return m[row];
         }
 
         const float * Matrix4x4::operator[](int row) const
         {
-            assert(0 <= row && row <= 4);
+            assert(0 <= row && row <= N);
             return m[row];
         }
 
         bool Matrix4x4::operator==(const Matrix4x4 & t) const
         {
-            for (int i = 0; i < 4; ++i) {
-                for (int j = 0; j < 4; ++j) {
+            for (int i = 0; i < N; ++i) {
+                for (int j = 0; j < N; ++j) {
                     if (!Math::IsEqual(m[i][j], t.m[i][j]))
                         return false;
                 }
@@ -72,8 +72,8 @@ namespace cpplib
 
         bool Matrix4x4::operator!=(const Matrix4x4 & t) const
         {
-            for (int i = 0; i < 4; ++i) {
-                for (int j = 0; j < 4; ++j) {
+            for (int i = 0; i < N; ++i) {
+                for (int j = 0; j < N; ++j) {
                     if (!Math::IsEqual(m[i][j], t.m[i][j]))
                         return true;
                 }
@@ -89,9 +89,9 @@ namespace cpplib
 
         Matrix4x4& Matrix4x4::operator*=(const Matrix4x4 & t)
         {
-            float row[4];
-            for (int i = 0; i < 4; ++i) {
-                for (int j = 0; j < 4; ++j) {
+            float row[N];
+            for (int i = 0; i < N; ++i) {
+                for (int j = 0; j < N; ++j) {
                     row[j] = m[i][0] * t.m[0][j] + m[i][1] * t.m[1][j] + m[i][2] * t.m[2][j] + m[i][3] * t.m[3][j];
                 }
                 m[i][0] = row[0];
@@ -102,20 +102,36 @@ namespace cpplib
             return *this;
         }
 
+        Matrix4x4 & Matrix4x4::operator*=(float k)
+        {
+            for (int i = 0; i < N; ++i) {
+                for (int j = 0; j < N; ++j) {
+                    m[i][j] *= k;
+                }
+            }
+            return *this;
+        }
+
         Matrix4x4 Matrix4x4::operator*(const Matrix4x4 & t) const
         {
             Matrix4x4 matrix;
-            for (int i = 0; i < 4; ++i) {
-                for (int j = 0; j < 4; ++j) {
+            for (int i = 0; i < N; ++i) {
+                for (int j = 0; j < N; ++j) {
                     matrix.m[i][j] = m[i][0] * t.m[0][j] + m[i][1] * t.m[1][j] + m[i][2] * t.m[2][j] + m[i][3] * t.m[3][j];
                 }
             }
             return matrix;
         }
 
-        Vector3 Matrix4x4::operator*(const Vector3 & v) const
+        Matrix4x4 Matrix4x4::operator*(float k) const
         {
-            return this->MultiplyPoint(v);
+            Matrix4x4 matrix;
+            for (int i = 0; i < N; ++i) {
+                for (int j = 0; j < N; ++j) {
+                    matrix.m[i][j] = m[i][j] * k;
+                }
+            }
+            return matrix;
         }
 
         Vector3 Matrix4x4::MultiplyVector(const Vector3 & v) const

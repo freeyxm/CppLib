@@ -40,9 +40,10 @@ namespace cpplib
 
             Matrix4x4& operator=(const Matrix4x4& t);
             Matrix4x4& operator*=(const Matrix4x4& t);
+            Matrix4x4& operator*=(float k);
 
             Matrix4x4 operator*(const Matrix4x4& t) const;
-            Vector3 operator*(const Vector3& v) const;
+            Matrix4x4 operator*(float k) const;
 
             Vector3 MultiplyVector(const Vector3& v) const;
             Vector3 MultiplyPoint(const Vector3& v) const;
@@ -68,7 +69,7 @@ namespace cpplib
             Quaternion Rotation() const;
 
         private:
-            const int N = 4;
+            static const int N = 4;
             void SwapRow(int r1, int r2);
             void AddRow(int r1, int r2, float k);
             void MulRow(int r, float k);

@@ -66,7 +66,7 @@ namespace cpplib
 
         Vector3 Quaternion::operator*(const Vector3 & a) const
         {
-            return Matrix4x4::Rotate(*this) * a;
+            return Matrix4x4::Rotate(*this).MultiplyVector(a);
         }
 
         bool Quaternion::operator==(const Quaternion & a) const
