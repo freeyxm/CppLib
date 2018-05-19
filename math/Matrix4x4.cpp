@@ -339,7 +339,12 @@ namespace cpplib
                 if (!Math::IsEqual(a.m[i][i], 1))
                 {
                     float k = 1.0f / a.m[i][i];
-                    a.MulRow(i, k);
+                    //a.MulRow(i, k);
+                    a.m[i][i] = 1;
+                    for (int c = i + 1; c < N; ++c)
+                    {
+                        a.m[i][c] *= k;
+                    }
                     b.MulRow(i, k);
                 }
                 for (int j = i + 1; j < N; ++j)
@@ -347,7 +352,12 @@ namespace cpplib
                     float k = -a.m[j][i];
                     if (!Math::IsEqual(k, 0))
                     {
-                        a.AddRow(j, i, k);
+                        //a.AddRow(j, i, k);
+                        a.m[j][i] = 0;
+                        for (int c = i + 1; c < N; ++c)
+                        {
+                            a.m[j][c] += a.m[i][c] * k;
+                        }
                         b.AddRow(j, i, k);
                     }
                 }
@@ -360,7 +370,8 @@ namespace cpplib
                     float k = -a.m[j][i];
                     if (!Math::IsEqual(k, 0))
                     {
-                        a.AddRow(j, i, k);
+                        //a.AddRow(j, i, k);
+                        a[j][i] = 0;
                         b.AddRow(j, i, k);
                     }
                 }
