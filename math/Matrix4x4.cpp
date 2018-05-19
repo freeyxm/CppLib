@@ -193,8 +193,9 @@ namespace cpplib
             );
         }
 
-        Matrix4x4 Matrix4x4::Rotate(const Vector3 & n, float degree)
+        Matrix4x4 Matrix4x4::Rotate(const Vector3 & axis, float degree)
         {
+            const Vector3 n = axis.normalized();
             const float radian = degree * Math::Deg2Rad;
             const float c = cos(radian);
             const float s = sin(radian);
