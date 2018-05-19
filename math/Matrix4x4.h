@@ -71,6 +71,7 @@ namespace cpplib
             const int N = 4;
             void SwapRow(int r1, int r2);
             void AddRow(int r1, int r2, float k);
+            void MulRow(int r, float k);
 
         public:
             static const Matrix4x4 identity;

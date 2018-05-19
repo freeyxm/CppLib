@@ -336,17 +336,20 @@ namespace cpplib
                         return Matrix4x4::zero;
                     }
                 }
-                float factor = 1.0f / a.m[i][i];
-                for (int c = i; c < N; ++c)
+                if (!Math::IsEqual(a.m[i][i], 1))
                 {
-                    a.m[i][c] *= factor;
-                    b.m[i][c] *= factor;
+                    float k = 1.0f / a.m[i][i];
+                    a.MulRow(i, k);
+                    b.MulRow(i, k);
                 }
                 for (int j = i + 1; j < N; ++j)
                 {
                     float k = -a.m[j][i];
-                    a.AddRow(j, i, k);
-                    b.AddRow(j, i, k);
+                    if (!Math::IsEqual(k, 0))
+                    {
+                        a.AddRow(j, i, k);
+                        b.AddRow(j, i, k);
+                    }
                 }
             }
             // top
@@ -355,8 +358,11 @@ namespace cpplib
                 for (int j = i - 1; j >= 0; --j)
                 {
                     float k = -a.m[j][i];
-                    a.AddRow(j, i, k);
-                    b.AddRow(j, i, k);
+                    if (!Math::IsEqual(k, 0))
+                    {
+                        a.AddRow(j, i, k);
+                        b.AddRow(j, i, k);
+                    }
                 }
             }
             return b;
@@ -425,6 +431,14 @@ namespace cpplib
             for (int i = 0; i < N; ++i)
             {
                 m[r1][i] += m[r2][i] * k;
+            }
+        }
+
+        void Matrix4x4::MulRow(int r, float k)
+        {
+            for (int i = 0; i < N; ++i)
+            {
+                m[r][i] *= k;
             }
         }
     } // namespace math
