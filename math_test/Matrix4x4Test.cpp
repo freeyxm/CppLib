@@ -152,3 +152,32 @@ TEST(Matrix4x4Test, TRS)
     Vector3 res = matrix.MultiplyVector(vec);
     EXPECT_TRUE(res == Vector3(9.956966f, 5.493502f, 26.05149f));
 }
+
+TEST(Matrix4x4Test, Ortho)
+{
+    Matrix4x4 matrix = Matrix4x4::Ortho(-16, +16, -9, +9, 0.3f, 100);
+    Vector3 res = matrix.MultiplyPoint(Vector3(7, 8, 9));
+    EXPECT_TRUE(res == Vector3(0.4375f, 0.8888889f, -1.18656f));
+}
+
+TEST(Matrix4x4Test, Perspective)
+{
+    float fov = 60;
+    float aspect = 16 / 9.0f;
+    float _near = 0.3f;
+    float _far = 100;
+    {
+        Matrix4x4 matrix = Matrix4x4::Perspective(fov, aspect, _near, _far);
+        Vector3 res = matrix.MultiplyPoint(Vector3(7, 8, 9));
+        EXPECT_TRUE(res == Vector3(-0.7577723f, -1.539601f, 1.072885f));
+        Vector3 vec = matrix.MultiplyVector(Vector3(7, 8, 9));
+        EXPECT_TRUE(vec == Vector3(6.81995f, 13.85641f, -9.054163f));
+    }
+    {
+        float h = 2 * fabs(_near) * tan(fov * Math::Deg2Rad * 0.5f);
+        float w = h * aspect;
+        Matrix4x4 matrix = Matrix4x4::Perspective(-w * 0.5f, +w * 0.5f, -h * 0.5f, +h * 0.5f, _near, _far);
+        Vector3 res = matrix.MultiplyPoint(Vector3(7, 8, 9));
+        EXPECT_TRUE(res == Vector3(-0.7577723f, -1.539601f, 1.072885f));
+    }
+}

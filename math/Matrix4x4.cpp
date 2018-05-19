@@ -147,7 +147,9 @@ namespace cpplib
             float x = m11 * v.x + m12 * v.y + m13 * v.z + m14;
             float y = m21 * v.x + m22 * v.y + m23 * v.z + m24;
             float z = m31 * v.x + m32 * v.y + m33 * v.z + m34;
-            return Vector3(x, y, z);
+            float w = m41 * v.x + m42 * v.y + m43 * v.z + m44;
+            float w1 = 1.0f / w;
+            return Vector3(x*w1, y*w1, z*w1);
         }
 
         Matrix4x4 Matrix4x4::Translate(const Vector3 & v)
@@ -170,6 +172,7 @@ namespace cpplib
                 });
         }
 
+        // Scale in an Arbitrary Direction
         Matrix4x4 Matrix4x4::Scale(const Vector3 & axis, float k)
         {
             const Vector3 n = axis.normalized();
@@ -312,6 +315,83 @@ namespace cpplib
             matrix *= Matrix4x4::Rotate(r);
             matrix *= Matrix4x4::Scale(s);
             return matrix;
+        }
+
+        // Projecting onto an Arbitrary Line or Plane.
+        // Same with Scale(axis, 0);
+        Matrix4x4 Matrix4x4::ProjectOrtho(const Vector3 & axis)
+        {
+            const Vector3 n = axis.normalized();
+            float xx = n.x * n.x;
+            float xy = n.x * n.y;
+            float xz = n.x * n.z;
+            float yy = n.y * n.y;
+            float yz = n.y * n.z;
+            float zz = n.z * n.z;
+            return Matrix4x4(
+                1 - xx, -xy, -xz, 0,
+                -xy, 1 - yy, -yz, 0,
+                -xz, -yz, 1 - zz, 0,
+                0, 0, 0, 1
+            );
+        }
+
+        // Reflection.
+        // Same with Scale(axis, -1);
+        Matrix4x4 Matrix4x4::Reflect(const Vector3 & axis)
+        {
+            const Vector3 n = axis.normalized();
+            float xx2 = n.x * n.x * 2;
+            float xy2 = n.x * n.y * 2;
+            float xz2 = n.x * n.z * 2;
+            float yy2 = n.y * n.y * 2;
+            float yz2 = n.y * n.z * 2;
+            float zz2 = n.z * n.z * 2;
+            return Matrix4x4(
+                1 - xx2, -xy2, -xz2, 0,
+                -xy2, 1 - yy2, -yz2, 0,
+                -xz2, -yz2, 1 - zz2, 0,
+                0, 0, 0, 1
+            );
+        }
+
+        Matrix4x4 Matrix4x4::Ortho(float l, float r, float b, float t, float n, float f)
+        {
+            float r_l = 1.0f / (r - l);
+            float t_b = 1.0f / (t - b);
+            float f_n = 1.0f / (f - n);
+            return Matrix4x4(
+                2 * r_l, 0, 0, -(r + l) * r_l,
+                0, 2 * t_b, 0, -(t + b) * t_b,
+                0, 0, -2 * f_n, -(f + n) * f_n,
+                0, 0, 0, 1
+            );
+        }
+
+        Matrix4x4 Matrix4x4::Perspective(float l, float r, float b, float t, float n, float f)
+        {
+            float r_l = 1.0f / (r - l);
+            float t_b = 1.0f / (t - b);
+            float f_n = 1.0f / (f - n);
+            float n_2 = n * 2;
+            return Matrix4x4(
+                n_2 * r_l, 0, (r + l) * r_l, 0,
+                0, n_2 * t_b, (t + b) * t_b, 0,
+                0, 0, (-f - n) * f_n, -n_2 * f * f_n,
+                0, 0, -1, 0
+            );
+        }
+
+        Matrix4x4 Matrix4x4::Perspective(float fov, float aspect, float n, float f)
+        {
+            float tf = 1.0f / tan(fov * Math::Deg2Rad * 0.5f);
+            float f_n = 1.0f / (f - n);
+            return Matrix4x4(
+                tf / aspect, 0, 0, 0,
+                0, tf, 0, 0,
+                0, 0, (-f - n) * f_n, (-2 * n * f * f_n),
+                0, 0, -1, 0
+            );
         }
 
         float Matrix4x4::Determinant() const

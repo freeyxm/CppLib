@@ -62,6 +62,14 @@ namespace cpplib
 
             static Matrix4x4 TRS(const Vector3& t, const Vector3& r, const Vector3& s);
 
+            static Matrix4x4 ProjectOrtho(const Vector3& axis);
+
+            static Matrix4x4 Reflect(const Vector3& axis);
+
+            static Matrix4x4 Ortho(float left, float right, float bottom, float top, float zNear, float zFar);
+            static Matrix4x4 Perspective(float left, float right, float bottom, float top, float zNear, float zFar);
+            static Matrix4x4 Perspective(float fov, float aspect, float zNear, float zFar);
+
         public:
             float Determinant() const;
             Matrix4x4 Inverse() const;
