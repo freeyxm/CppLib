@@ -1,34 +1,34 @@
 #pragma once
 #include <ctime>
 
-namespace cpplib
+namespace cpplib {
+namespace utility {
+
+class Timer
 {
-    namespace utility
-    {
-        class Timer
-        {
-        public:
-            Timer();
-            ~Timer();
+public:
+    Timer();
+    ~Timer();
 
-            void Start();
-            void Stop();
-            void Reset();
+    void Start();
+    void Stop();
+    void Reset();
 
-            void Pause();
-            void Resume();
+    void Pause();
+    void Resume();
 
-            bool IsRunning() const { return m_running; };
-            bool IsPause() const { return m_pause; };
+    bool IsRunning() const { return m_running; };
+    bool IsPause() const { return m_pause; };
 
-            long Milliseconds() const;
-            double Seconds() const;
+    long Milliseconds() const;
+    double Seconds() const;
 
-        private:
-            clock_t m_start_time;
-            clock_t m_total_time;
-            bool m_running;
-            bool m_pause;
-        };
-    } // namespace utility
+private:
+    clock_t m_start_time;
+    clock_t m_total_time;
+    bool m_running;
+    bool m_pause;
+};
+
+} // namespace utility
 } // namespace cpplib
