@@ -176,14 +176,18 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="test_performance.cpp" />
     <ClCompile Include="Vector3Test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\googletest\msvc\2010\gtest.vcxproj">
       <Project>{c8f6c172-56f2-4e76-b5fa-c3b423b31be7}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Math\Math.vcxproj">
+    <ProjectReference Include="..\math\math.vcxproj">
       <Project>{b47a59b3-90bd-4324-9554-ddf715d289e5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\utility\utility.vcxproj">
+      <Project>{dab34292-e4a8-46c7-ac1b-0654c13e96cc}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

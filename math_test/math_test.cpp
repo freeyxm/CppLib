@@ -4,9 +4,13 @@
 #include "stdafx.h"
 #include <gtest/gtest.h>
 
+void test_performance();
+
 int main(int argc, char** argv)
 {
     testing::InitGoogleTest(&argc, argv);
+
+    //test_performance();
 
     int res = RUN_ALL_TESTS();
     getchar();
