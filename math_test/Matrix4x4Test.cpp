@@ -1,9 +1,9 @@
 #include "stdafx.h"
-#include <gtest\gtest.h>
-#include <Math\Vector3.h>
-#include <Math\Quaternion.h>
-#include <Math\Matrix4x4.h>
-#include <Math\Math.h>
+#include <gtest/gtest.h>
+#include <math/Vector3.h>
+#include <math/Quaternion.h>
+#include <math/Matrix4x4.h>
+#include <math/Math.h>
 #include <iostream>
 
 using namespace std;
