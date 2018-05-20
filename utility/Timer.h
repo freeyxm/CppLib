@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __CPPLIB_UTILITY_TIMER_H__
+#define __CPPLIB_UTILITY_TIMER_H__
 #include <ctime>
 
 namespace cpplib {
@@ -32,3 +33,4 @@ private:
 
 } // namespace utility
 } // namespace cpplib
+#endif // !__CPPLIB_UTILITY_TIMER_H__

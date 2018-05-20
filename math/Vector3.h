@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __CPPLIB_MATH_VECTOR3_H__
+#define __CPPLIB_MATH_VECTOR3_H__
 
 namespace cpplib {
 namespace math {
@@ -55,3 +56,4 @@ public:
 
 } // namespace math
 } // namespace cpplib
+#endif // !__CPPLIB_MATH_VECTOR3_H__

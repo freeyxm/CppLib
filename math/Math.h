@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __CPPLIB_MATH_MATH_H__
+#define __CPPLIB_MATH_MATH_H__
 
 namespace cpplib {
 namespace math {
@@ -23,3 +24,4 @@ inline bool IsEqual(double a, double b)
 
 } // namespace math
 } // namespace cpplib
+#endif // !__CPPLIB_MATH_MATH_H__

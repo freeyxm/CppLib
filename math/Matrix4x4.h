@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __CPPLIB_MATH_MATRIX4X4_H__
+#define __CPPLIB_MATH_MATRIX4X4_H__
 #include "Vector3.h"
 #include "Quaternion.h"
 
@@ -88,3 +89,4 @@ public:
 
 } // namespace math
 } // namespace cpplib
+#endif // !__CPPLIB_MATH_MATRIX4X4_H__

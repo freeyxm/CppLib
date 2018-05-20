@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __CPPLIB_MATH_QUATERNION_H__
+#define __CPPLIB_MATH_QUATERNION_H__
 #include "Vector3.h"
 
 namespace cpplib {
@@ -47,3 +48,4 @@ public:
 
 } // namespace math
 } // namespace cpplib
+#endif // !__CPPLIB_MATH_QUATERNION_H__
