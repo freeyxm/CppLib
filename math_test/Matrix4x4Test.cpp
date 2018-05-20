@@ -7,6 +7,7 @@
 #include <iostream>
 
 using namespace std;
+using namespace cpplib;
 using namespace cpplib::math;
 
 extern void PrintMatrix(const char* name, const Matrix4x4& matrix)
@@ -174,7 +175,7 @@ TEST(Matrix4x4Test, Perspective)
         EXPECT_TRUE(vec == Vector3(6.81995f, 13.85641f, -9.054163f));
     }
     {
-        float h = 2 * fabs(_near) * tan(fov * Math::Deg2Rad * 0.5f);
+        float h = 2 * fabs(_near) * tan(fov * math::Deg2Rad * 0.5f);
         float w = h * aspect;
         Matrix4x4 matrix = Matrix4x4::Perspective(-w * 0.5f, +w * 0.5f, -h * 0.5f, +h * 0.5f, _near, _far);
         Vector3 res = matrix.MultiplyPoint(Vector3(7, 8, 9));

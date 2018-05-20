@@ -5,6 +5,7 @@
 #include <iostream>
 
 using namespace std;
+using namespace cpplib;
 using namespace cpplib::math;
 
 extern void PrintVector3(const char* name, const Vector3& v)
@@ -37,5 +38,5 @@ TEST(Vector3Test, Cross)
     Vector3 vec2 = Vector3::left;
     Vector3 vec3 = Vector3::Cross(vec1, vec2);
     float angle = acos(Vector3::Dot(vec1, vec3) / (vec1.Length() * vec3.Length()));
-    EXPECT_FLOAT_EQ(angle, Math::PI / 2);
+    EXPECT_FLOAT_EQ(angle, math::PI / 2);
 }

@@ -71,12 +71,12 @@ namespace cpplib
 
         bool Quaternion::operator==(const Quaternion & a) const
         {
-            return Math::IsEqual(x, a.x) && Math::IsEqual(y, a.y) && Math::IsEqual(z, a.z) && Math::IsEqual(w, a.w);
+            return math::IsEqual(x, a.x) && math::IsEqual(y, a.y) && math::IsEqual(z, a.z) && math::IsEqual(w, a.w);
         }
 
         bool Quaternion::operator!=(const Quaternion & a) const
         {
-            return !Math::IsEqual(x, a.x) || !Math::IsEqual(y, a.y) || !Math::IsEqual(z, a.z) || !Math::IsEqual(w, a.w);
+            return !math::IsEqual(x, a.x) || !math::IsEqual(y, a.y) || !math::IsEqual(z, a.z) || !math::IsEqual(w, a.w);
         }
 
         float Quaternion::Magnitude() const
@@ -91,7 +91,7 @@ namespace cpplib
             // ¼ì²éÍòÏòËø
             if (fabs(sp) > 0.9999f)
             {
-                p = Math::PI * 0.5f * sp;
+                p = math::PI * 0.5f * sp;
                 h = atan2(-x * z + w * y, 0.5f - y * y - z * z);
                 b = 0.0f;
             }
@@ -101,9 +101,9 @@ namespace cpplib
                 h = atan2(x * z + w * y, 0.5f - x * x - y * y);
                 b = atan2(x * y + w * z, 0.5f - x * x - z * z);
             }
-            p *= Math::Rad2Deg;
-            h *= Math::Rad2Deg;
-            b *= Math::Rad2Deg;
+            p *= math::Rad2Deg;
+            h *= math::Rad2Deg;
+            b *= math::Rad2Deg;
             return Vector3(p, h, b);
         }
 
@@ -120,9 +120,9 @@ namespace cpplib
 
         Quaternion Quaternion::Euler(const Vector3 & euler)
         {
-            float p = euler.x * Math::Deg2Rad * 0.5f;
-            float h = euler.y * Math::Deg2Rad * 0.5f;
-            float b = euler.z * Math::Deg2Rad * 0.5f;
+            float p = euler.x * math::Deg2Rad * 0.5f;
+            float h = euler.y * math::Deg2Rad * 0.5f;
+            float b = euler.z * math::Deg2Rad * 0.5f;
             float cp = cos(p);
             float sp = sin(p);
             float ch = cos(h);

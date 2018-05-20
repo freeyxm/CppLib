@@ -63,7 +63,7 @@ namespace cpplib
         {
             for (int i = 0; i < N; ++i) {
                 for (int j = 0; j < N; ++j) {
-                    if (!Math::IsEqual(m[i][j], t.m[i][j]))
+                    if (!math::IsEqual(m[i][j], t.m[i][j]))
                         return false;
                 }
             }
@@ -74,7 +74,7 @@ namespace cpplib
         {
             for (int i = 0; i < N; ++i) {
                 for (int j = 0; j < N; ++j) {
-                    if (!Math::IsEqual(m[i][j], t.m[i][j]))
+                    if (!math::IsEqual(m[i][j], t.m[i][j]))
                         return true;
                 }
             }
@@ -216,7 +216,7 @@ namespace cpplib
         Matrix4x4 Matrix4x4::Rotate(const Vector3 & axis, float degree)
         {
             const Vector3 n = axis.normalized();
-            const float radian = degree * Math::Deg2Rad;
+            const float radian = degree * math::Deg2Rad;
             const float c = cos(radian);
             const float s = sin(radian);
             const float   c1 = 1 - c;
@@ -242,9 +242,9 @@ namespace cpplib
 
         Matrix4x4 Matrix4x4::Rotate(const Vector3 & euler)
         {
-            const float h = euler.y * Math::Deg2Rad;
-            const float p = euler.x * Math::Deg2Rad;
-            const float b = euler.z * Math::Deg2Rad;
+            const float h = euler.y * math::Deg2Rad;
+            const float p = euler.x * math::Deg2Rad;
+            const float b = euler.z * math::Deg2Rad;
             const float ch = cos(h);
             const float cp = cos(p);
             const float ch_cp = ch * cp;
@@ -272,7 +272,7 @@ namespace cpplib
 
         Matrix4x4 Matrix4x4::RotateX(float degree)
         {
-            const float radian = degree * Math::Deg2Rad;
+            const float radian = degree * math::Deg2Rad;
             const float c = cos(radian);
             const float s = sin(radian);
             return Matrix4x4({
@@ -285,7 +285,7 @@ namespace cpplib
 
         Matrix4x4 Matrix4x4::RotateY(float degree)
         {
-            const float radian = degree * Math::Deg2Rad;
+            const float radian = degree * math::Deg2Rad;
             const float c = cos(radian);
             const float s = sin(radian);
             return Matrix4x4({
@@ -298,7 +298,7 @@ namespace cpplib
 
         Matrix4x4 Matrix4x4::RotateZ(float degree)
         {
-            const float radian = degree * Math::Deg2Rad;
+            const float radian = degree * math::Deg2Rad;
             const float c = cos(radian);
             const float s = sin(radian);
             return Matrix4x4({
@@ -384,7 +384,7 @@ namespace cpplib
 
         Matrix4x4 Matrix4x4::Perspective(float fov, float aspect, float n, float f)
         {
-            float tf = 1.0f / tan(fov * Math::Deg2Rad * 0.5f);
+            float tf = 1.0f / tan(fov * math::Deg2Rad * 0.5f);
             float f_n = 1.0f / (f - n);
             return Matrix4x4(
                 tf / aspect, 0, 0, 0,
@@ -427,10 +427,10 @@ namespace cpplib
             Matrix4x4 b(Matrix4x4::identity);
             // bottom
             for (int i = 0; i < N; ++i) {
-                if (Math::IsEqual(m[i][i], 0)) {
+                if (math::IsEqual(m[i][i], 0)) {
                     bool find = false;
                     for (int j = i + 1; j < N; ++j) {
-                        if (!Math::IsEqual(m[j][i], 0)) {
+                        if (!math::IsEqual(m[j][i], 0)) {
                             a.SwapRow(i, j);
                             b.SwapRow(i, j);
                             find = true;
@@ -441,7 +441,7 @@ namespace cpplib
                         return Matrix4x4::zero;
                     }
                 }
-                if (!Math::IsEqual(a.m[i][i], 1))
+                if (!math::IsEqual(a.m[i][i], 1))
                 {
                     float k = 1.0f / a.m[i][i];
                     //a.MulRow(i, k);
@@ -455,7 +455,7 @@ namespace cpplib
                 for (int j = i + 1; j < N; ++j)
                 {
                     float k = -a.m[j][i];
-                    if (!Math::IsEqual(k, 0))
+                    if (!math::IsEqual(k, 0))
                     {
                         //a.AddRow(j, i, k);
                         a.m[j][i] = 0;
@@ -473,7 +473,7 @@ namespace cpplib
                 for (int j = i - 1; j >= 0; --j)
                 {
                     float k = -a.m[j][i];
-                    if (!Math::IsEqual(k, 0))
+                    if (!math::IsEqual(k, 0))
                     {
                         //a.AddRow(j, i, k);
                         a[j][i] = 0;

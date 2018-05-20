@@ -101,12 +101,12 @@ namespace cpplib
 
         bool Vector3::operator==(const Vector3 & a) const
         {
-            return Math::IsEqual(x, a.x) && Math::IsEqual(y, a.y) && Math::IsEqual(z, a.z);
+            return math::IsEqual(x, a.x) && math::IsEqual(y, a.y) && math::IsEqual(z, a.z);
         }
 
         bool Vector3::operator!=(const Vector3 & a) const
         {
-            return !Math::IsEqual(x, a.x) || !Math::IsEqual(y, a.y) || !Math::IsEqual(z, a.z);
+            return !math::IsEqual(x, a.x) || !math::IsEqual(y, a.y) || !math::IsEqual(z, a.z);
         }
 
         void Vector3::Zero()
