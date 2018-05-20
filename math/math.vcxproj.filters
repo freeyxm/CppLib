@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="geometry">
+      <UniqueIdentifier>{194ca924-ea61-405b-8495-bfdd99cf027b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -33,6 +36,15 @@
     <ClInclude Include="Quaternion.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="AABB.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -52,6 +64,15 @@
     </ClCompile>
     <ClCompile Include="Quaternion.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Ray.cpp">
+      <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="AABB.cpp">
+      <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>geometry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
