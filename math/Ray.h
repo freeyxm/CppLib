@@ -18,6 +18,8 @@ public:
     Vector3 origin() const { return m_origin; };
     Vector3 direction() const { return m_direction; };
 
+    bool Raycast(const Ray& ray2, float& t1, float& t2);
+
 private:
     Vector3 m_origin;
     Vector3 m_direction;
