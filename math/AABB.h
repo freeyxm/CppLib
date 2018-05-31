@@ -1,6 +1,7 @@
 #ifndef __CPPLIB_MATH_GEOMETRY_AABB_H__
 #define __CPPLIB_MATH_GEOMETRY_AABB_H__
 #include "Vector3.h"
+#include "Ray.h"
 
 namespace cpplib {
 namespace math {
@@ -14,6 +15,11 @@ public:
 
     void Reset();
     void AddPoint(const Vector3& point);
+
+    bool Raycast(const Ray& ray, float& tmin, float& tmax);
+
+    Vector3 Center() const;
+    Vector3 Size() const;
 
 private:
     Vector3 m_min;
