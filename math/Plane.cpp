@@ -75,16 +75,16 @@ bool Plane::GetSide(const Vector3 & point)
     return Distance(point) >= 0;
 }
 
-bool Plane::Raycast(const Ray & ray, float & enter)
+bool Plane::Raycast(const Ray & ray, float & t)
 {
     float dot = Vector3::Dot(ray.direction(), this->m_normal);
     if (math::IsEqual(dot, 0))
     {
-        enter = 0;
+        t = 0;
         return false;
     }
-    enter = (this->m_distance - Vector3::Dot(ray.origin(), this->m_normal)) / dot;
-    return enter >= 0;
+    t = (this->m_distance - Vector3::Dot(ray.origin(), this->m_normal)) / dot;
+    return t >= 0;
 }
 
 } // namespace geometry

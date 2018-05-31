@@ -28,7 +28,7 @@ public:
 
     bool GetSide(const Vector3& point);
 
-    bool Raycast(const Ray& ray, float& enter);
+    bool Raycast(const Ray& ray, float& t);
 
 private:
     Vector3 m_normal;
