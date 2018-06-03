@@ -48,6 +48,9 @@
     <ClInclude Include="Sphere.h">
       <Filter>geometry</Filter>
     </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -78,6 +81,9 @@
       <Filter>geometry</Filter>
     </ClCompile>
     <ClCompile Include="Sphere.cpp">
+      <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
   </ItemGroup>
