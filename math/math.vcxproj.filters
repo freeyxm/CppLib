@@ -36,19 +36,19 @@
     <ClInclude Include="Quaternion.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Ray.h">
+    <ClInclude Include="geometry\AABB.h">
       <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="AABB.h">
+    <ClInclude Include="geometry\Plane.h">
       <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Plane.h">
+    <ClInclude Include="geometry\Ray.h">
       <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Sphere.h">
+    <ClInclude Include="geometry\Sphere.h">
       <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Triangle.h">
+    <ClInclude Include="geometry\Triangle.h">
       <Filter>geometry</Filter>
     </ClInclude>
   </ItemGroup>
@@ -71,19 +71,19 @@
     <ClCompile Include="Quaternion.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Ray.cpp">
+    <ClCompile Include="geometry\AABB.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
-    <ClCompile Include="AABB.cpp">
+    <ClCompile Include="geometry\Plane.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Plane.cpp">
+    <ClCompile Include="geometry\Ray.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Sphere.cpp">
+    <ClCompile Include="geometry\Sphere.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Triangle.cpp">
+    <ClCompile Include="geometry\Triangle.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
   </ItemGroup>

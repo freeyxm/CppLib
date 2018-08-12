@@ -1,6 +1,5 @@
-#include "stdafx.h"
 #include "Ray.h"
-#include "Math.h"
+#include "math/Math.h"
 
 namespace cpplib {
 namespace math {

@@ -1,6 +1,5 @@
-#include "stdafx.h"
 #include "Sphere.h"
-#include "Math.h"
+#include "math/Math.h"
 #include <cmath>
 
 namespace cpplib {

@@ -1,6 +1,6 @@
 #ifndef __CPPLIB_MATH_GEOMETRY_AABB_H__
 #define __CPPLIB_MATH_GEOMETRY_AABB_H__
-#include "Vector3.h"
+#include "math/Vector3.h"
 #include "Ray.h"
 
 namespace cpplib {

@@ -1,6 +1,5 @@
-#include "stdafx.h"
 #include "Plane.h"
-#include "Math.h"
+#include "math/Math.h"
 
 namespace cpplib {
 namespace math {
