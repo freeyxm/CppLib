@@ -30,10 +30,10 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="state_machine.h">
+    <ClInclude Include="fsm\state_base.h">
       <Filter>fsm</Filter>
     </ClInclude>
-    <ClInclude Include="state_base.h">
+    <ClInclude Include="fsm\state_machine.h">
       <Filter>fsm</Filter>
     </ClInclude>
   </ItemGroup>
@@ -41,10 +41,10 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="state_machine.cpp">
+    <ClCompile Include="fsm\state_base.cpp">
       <Filter>fsm</Filter>
     </ClCompile>
-    <ClCompile Include="state_base.cpp">
+    <ClCompile Include="fsm\state_machine.cpp">
       <Filter>fsm</Filter>
     </ClCompile>
   </ItemGroup>
